@@ -58,7 +58,12 @@ public class RapeMasterFontManager extends FontRenderer{
         this.fontWidth = (int)Math.ceil(maxBounds.getWidth());
         this.fontHeight = (int)Math.ceil(maxBounds.getHeight());
         if (this.fontWidth > 127 || this.fontHeight > 127) {
-            throw new IllegalArgumentException("Font size to large!");
+            float scale = 126.0f / Math.max(this.fontWidth, this.fontHeight);
+            this.font = font.deriveFont(font.getSize2D() * scale);
+            this.size = this.font.getSize2D();
+            Rectangle2D scaledBounds = this.font.getMaxCharBounds(this.context);
+            this.fontWidth = (int)Math.ceil(scaledBounds.getWidth());
+            this.fontHeight = (int)Math.ceil(scaledBounds.getHeight());
         }
         this.textureWidth = this.resizeToOpenGLSupportResolution(this.fontWidth * 16);
         this.textureHeight = this.resizeToOpenGLSupportResolution(this.fontHeight * 16);

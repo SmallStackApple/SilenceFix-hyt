@@ -220,7 +220,10 @@ public class FontManager {
         }
         catch (Exception e) {
             e.printStackTrace();
-            font = new Font("Arial", Font.PLAIN, (int) fontSize);
+        }
+        if (font == null) {
+            System.out.println("[FontManager] Failed to load font: " + fontName + ", fallback to Arial");
+            font = new Font("Arial", Font.PLAIN, Math.min((int) fontSize, 48));
         }
         return font;
     }
