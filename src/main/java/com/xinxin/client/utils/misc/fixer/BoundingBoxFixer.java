@@ -23,30 +23,21 @@ public class BoundingBoxFixer {
     }
 
     private float getThicknessValue(ComparableProtocolVersion protocolVersion, float defaultThickness) {
-        switch (protocolVersion.getVersion()) {
-            case ViaMCP.NATIVE_VERSION:
-                return defaultThickness;
-            default:
-                return 0.1875F;
+        if (protocolVersion.getVersion() == ViaMCP.NATIVE_VERSION) {
+            return defaultThickness;
         }
+        return 0.1875F;
     }
 
     private AxisAlignedBB calculateLadderBounds(EnumFacing facing, float thickness) {
-        switch (facing) {
-            case NORTH:
-                return new AxisAlignedBB(0.0F, 0.0F, 1.0F - thickness, 1.0F, 1.0F, 1.0F);
-            case SOUTH:
-                return new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, thickness);
-            case WEST:
-                return new AxisAlignedBB(1.0F - thickness, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            case EAST:
-                return new AxisAlignedBB(0.0F, 0.0F, 0.0F, thickness, 1.0F, 1.0F);
-            case UP:
-            case DOWN:
-                throw new IllegalArgumentException("Invalid facing for a ladder: " + facing);
-            default:
-                throw new IllegalArgumentException("Unexpected facing: " + facing);
-        }
+        return switch (facing) {
+            case NORTH -> new AxisAlignedBB(0.0F, 0.0F, 1.0F - thickness, 1.0F, 1.0F, 1.0F);
+            case SOUTH -> new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, thickness);
+            case WEST -> new AxisAlignedBB(1.0F - thickness, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+            case EAST -> new AxisAlignedBB(0.0F, 0.0F, 0.0F, thickness, 1.0F, 1.0F);
+            case UP, DOWN -> throw new IllegalArgumentException("Invalid facing for a ladder: " + facing);
+            default -> throw new IllegalArgumentException("Unexpected facing: " + facing);
+        };
     }
 
     public AxisAlignedBB fixCarpet() {

@@ -94,7 +94,7 @@ public class SilenceFix {
     public List<Float> cGUIPosX = new ArrayList<>();
     public List<Float> cGUIPosY = new ArrayList<>();
     public List<Module> cGUIInSetting = new ArrayList<>();
-    public List<Value<?>> cGUIInMode = new ArrayList();
+    public List<Value<?>> cGUIInMode = new ArrayList<>();
     public static Unsafe theUnsafe;
     public BackgroundShader blobShader;
     public Island island;
@@ -249,8 +249,8 @@ public class SilenceFix {
             return;
         }
 
-        Module autoProjectile = this.moduleManager.getModule(dev.xinxin.module.modules.combat.AutoProjectile.class);
-        if (autoProjectile != null && !autoProjectile.getState() && !((AutoProjectile) autoProjectile).manualClose) {
+        AutoProjectile autoProjectile = ModuleManager.getModule(dev.xinxin.module.modules.combat.AutoProjectile.class);
+        if (autoProjectile != null && !autoProjectile.getState() && !autoProjectile.manualClose) {
             boolean hasSharpXAxe = false;
             boolean hasSharp2GoldSword = false;
 

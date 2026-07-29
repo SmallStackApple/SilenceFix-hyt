@@ -5,17 +5,14 @@ plugins {
 group = "dev.xinxin.silencefix"
 version = "1.0-SNAPSHOT"
 
-sourceSets {
-    main {
-        java.srcDir("src/main/java")
-        resources.srcDir("src/main/resources")
-    }
-}
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.encoding = "UTF-8"
 }
 
 repositories {
@@ -24,4 +21,5 @@ repositories {
 
 dependencies {
     implementation(fileTree("libs/"))
+    annotationProcessor(files("libs/client/lombok.jar"))
 }

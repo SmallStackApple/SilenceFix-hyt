@@ -39,7 +39,6 @@ import dev.xinxin.utils.render.RenderUtil;
 import dev.xinxin.utils.render.fontRender.FontManager;
 import dev.yalan.live.silencefix.LiveClient;
 import dev.yalan.live.silencefix.LiveComponent;
-import dev.yalan.live.silencefix.gui.GuiAuthentication;
 import dev.yalan.live.silencefix.netty.LiveProto;
 import lombok.Getter;
 import lombok.Setter;
@@ -353,6 +352,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     private void startGame() throws LWJGLException {
         LiveClient.INSTANCE = new LiveClient();
+        LiveClient.INSTANCE.initializeOfflineUser(this.session.getUsername());
 
         this.gameSettings = new GameSettings(this, this.mcDataDir);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
@@ -436,7 +436,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.checkGLError("Post startup");
         this.ingameGUI = new GuiIngame(this);
 
-        this.displayGuiScreen(GuiAuthentication.INSTANCE);
+        this.displayGuiScreen(new BetterMainMenu());
 
         this.renderEngine.deleteTexture(this.mojangLogo);
         this.mojangLogo = null;

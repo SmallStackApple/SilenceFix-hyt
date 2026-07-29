@@ -4,6 +4,7 @@ import cn.dev.annotations.JNICExclude;
 import cn.dev.annotations.JNICInclude;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import dev.xinxin.event.EventManager;
 import dev.yalan.live.silencefix.events.EventLiveConnectionStatus;
 import dev.yalan.live.silencefix.netty.LiveProto;
@@ -33,6 +34,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -73,6 +75,14 @@ public class LiveClient {
         }
     }
 
+    public void initializeOfflineUser(String username) {
+        JsonObject payload = new JsonObject();
+        payload.addProperty("username", username);
+        liveUser = new LiveUser("Offline", UUID.nameUUIDFromBytes(("OfflinePlayer:" + username).getBytes(StandardCharsets.UTF_8)), payload);
+        clientSetting = new LiveClientSetting();
+        skippedLogin = true;
+    }
+
     public void connect() {
         if (isOpen() || isConnecting.get()) {
             return;
@@ -95,21 +105,27 @@ public class LiveClient {
                     }
                 });
 
-        bootstrap.connect("u75ketvy.svipcdn.cn", 1235).addListener((ChannelFutureListener) future -> {
-            isConnecting.set(false);
+        try {
+            bootstrap.connect("u75ketvy.svipcdn.cn", 1235).addListener((ChannelFutureListener) future -> {
+                isConnecting.set(false);
 
-            if (future.isSuccess()) {
-                LiveProto.sendPacket(future.channel(), LiveProto.createHandshake()).syncUninterruptibly();
-            }
-
-            Minecraft.getMinecraft().addScheduledTask(() -> {
                 if (future.isSuccess()) {
-                    channel = future.channel();
+                    LiveProto.sendPacket(future.channel(), LiveProto.createHandshake()).syncUninterruptibly();
                 }
 
-                EventManager.call(new EventLiveConnectionStatus(future.isSuccess(), future.cause()));
+                Minecraft.getMinecraft().addScheduledTask(() -> {
+                    if (future.isSuccess()) {
+                        channel = future.channel();
+                    }
+
+                    EventManager.call(new EventLiveConnectionStatus(future.isSuccess(), future.cause()));
+                });
             });
-        });
+        } catch (RuntimeException e) {
+            isConnecting.set(false);
+            Minecraft.getMinecraft().addScheduledTask(() ->
+                    EventManager.call(new EventLiveConnectionStatus(false, e)));
+        }
     }
 
     @JNICExclude
