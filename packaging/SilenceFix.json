@@ -1,0 +1,66 @@
+{
+  "id": "@ID@",
+  "type": "release",
+  "mainClass": "net.minecraft.client.main.Main",
+  "minimumLauncherVersion": 21,
+  "javaVersion": {
+    "component": "jre-legacy",
+    "majorVersion": 17
+  },
+  "minecraftArguments": "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userType ${user_type} --versionType ${version_type}",
+  "assetIndex": {
+    "id": "1.12",
+    "sha1": "a21e1ded1a24ea1548dd8db0cf30b6acb02655a9",
+    "size": 143136,
+    "totalSize": 129843781,
+    "url": "https://piston-meta.mojang.com/v1/packages/a21e1ded1a24ea1548dd8db0cf30b6acb02655a9/1.12.json"
+  },
+  "assets": "1.12",
+  "libraries": [
+    { "name": "dev.xinxin.libs:authlib:1.5.21" },
+    { "name": "dev.xinxin.libs:codecjorbis:20101023" },
+    { "name": "dev.xinxin.libs:codecwav:20101023" },
+    { "name": "dev.xinxin.libs:commons-codec:1.9" },
+    { "name": "dev.xinxin.libs:commons-compress:1.8.1" },
+    { "name": "dev.xinxin.libs:commons-io:2.4" },
+    { "name": "dev.xinxin.libs:commons-lang3:3.3.2" },
+    { "name": "dev.xinxin.libs:commons-logging:1.1.3" },
+    { "name": "dev.xinxin.libs:gson:2.2.4" },
+    { "name": "dev.xinxin.libs:guava:17.0" },
+    { "name": "dev.xinxin.libs:httpclient:4.3.3" },
+    { "name": "dev.xinxin.libs:httpcore:4.3.2" },
+    { "name": "dev.xinxin.libs:icu4j-core-mojang:51.2" },
+    { "name": "dev.xinxin.libs:jinput:2.0.5" },
+    {
+      "name": "dev.xinxin.libs:jinput-platform:2.0.5",
+      "natives": { "windows": "natives-windows" },
+      "rules": [ { "action": "allow", "os": { "name": "windows" } } ],
+      "extract": { "exclude": [ "META-INF/" ] }
+    },
+    { "name": "dev.xinxin.libs:jna:3.4.0" },
+    { "name": "dev.xinxin.libs:jopt-simple:4.6" },
+    { "name": "dev.xinxin.libs:jutils:1.0.0" },
+    { "name": "dev.xinxin.libs:launchwrapper:1.12" },
+    { "name": "dev.xinxin.libs:libraryjavasound:20101123" },
+    { "name": "dev.xinxin.libs:librarylwjglopenal:20100824" },
+    { "name": "dev.xinxin.libs:log4j-api:2.0-beta9" },
+    { "name": "dev.xinxin.libs:log4j-core:2.0-beta9" },
+    { "name": "dev.xinxin.libs:lwjgl:2.9.4-nightly-20150209" },
+    {
+      "name": "dev.xinxin.libs:lwjgl-platform:2.9.4-nightly-20150209",
+      "natives": { "windows": "natives-windows" },
+      "rules": [ { "action": "allow", "os": { "name": "windows" } } ],
+      "extract": { "exclude": [ "META-INF/" ] }
+    },
+    { "name": "dev.xinxin.libs:lwjgl:2.9.4" },
+    { "name": "dev.xinxin.libs:lwjgl_util:2.9.4-nightly-20150209" },
+    { "name": "dev.xinxin.libs:lwjgl_util:2.9.4" },
+    { "name": "dev.xinxin.libs:netty:1.8.8" },
+    { "name": "dev.xinxin.libs:netty-all:4.0.23.Final" },
+    { "name": "dev.xinxin.libs:oshi-core:1.1" },
+    { "name": "dev.xinxin.libs:platform:3.4.0" },
+    { "name": "dev.xinxin.libs:soundsystem:20120107" },
+    { "name": "dev.xinxin.libs:twitch:6.5" },
+    { "name": "dev.xinxin.libs:vecmath:1.5.3" }
+  ]
+}

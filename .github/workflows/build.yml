@@ -31,12 +31,20 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build
-        run: .\gradlew.bat clean build --no-daemon
+        run: .\gradlew.bat clean packageClient --no-daemon
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
-          name: SilenceFix
+          name: SilenceFix-jar
           path: build/libs/*.jar
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload version package
+        uses: actions/upload-artifact@v4
+        with:
+          name: SilenceFix
+          path: build/dist/
           if-no-files-found: error
           retention-days: 14
